@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BellaSer - Estética & Spa</title>
+    
+    <!-- Tailwind CSS para un diseño rápido y responsive -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts para una tipografía elegante -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Usamos las fuentes importadas y definimos estilos base */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #111827; /* Fondo oscuro para todo */
+        }
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Estilo para los acordeones de servicios */
+        details > summary {
+            list-style: none; /* Ocultar el marcador por defecto */
+            cursor: pointer;
+        }
+        details > summary::-webkit-details-marker {
+            display: none; /* Ocultar el marcador en Chrome/Safari */
+        }
+        /* Animación suave para la apertura del acordeón */
+        details[open] > div {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="text-gray-200">
+
+    <!-- Contenedor del Video de Fondo -->
+    <div class="fixed top-0 left-0 w-full h-full z-0 overflow-hidden">
+        <video autoplay loop muted playsinline class="w-full h-full object-cover opacity-30">
+            <!-- Video de ejemplo de Pexels. Reemplázalo con tu propio video. -->
+            <source src="https://videos.pexels.com/video-files/7573338/7573338-hd_1920_1080_25fps.mp4" type="video/mp4">
+            Tu navegador no soporta videos HTML5.
+        </video>
+    </div>
+
+    <!-- Contenedor principal para las "páginas" -->
+    <div class="relative z-10">
+
+        <!-- ======================================================= -->
+        <!-- ==================== PÁGINA DE INICIO =================== -->
+        <!-- ======================================================= -->
+        <section id="home-page" class="min-h-screen flex flex-col items-center justify-center text-center p-4">
+            <div class="bg-black/30 backdrop-blur-sm p-8 md:p-12 rounded-xl">
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold text-white shadow-lg">BellaSer</h1>
+                <p class="text-lg md:text-xl lg:text-2xl mt-4 text-gray-300">Un refugio para tu cuerpo y alma.</p>
+                <button id="ver-servicios-btn" class="mt-8 px-8 py-3 bg-white/90 text-gray-900 font-semibold rounded-lg shadow-md hover:bg-white transform hover:scale-105 transition-all duration-300">
+                    Ver Servicios
+                </button>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- =================== PÁGINA DE SERVICIOS ================= -->
+        <!-- ======================================================= -->
+        <section id="services-page" class="hidden min-h-screen p-4 md:p-8">
+            <div class="max-w-4xl mx-auto">
+                <button id="back-to-home-btn" class="mb-8 text-white hover:text-gray-300 transition-colors">&larr; Volver al Inicio</button>
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-10 text-white">Nuestros Servicios</h2>
+                
+                <div id="services-list" class="space-y-4">
+                    <!-- Las categorías y servicios se generarán con JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- ==================== PÁGINA DE RESERVA ================== -->
+        <!-- ======================================================= -->
+        <section id="booking-page" class="hidden min-h-screen flex items-center justify-center p-4">
+            <div class="max-w-lg w-full mx-auto bg-gray-800/50 backdrop-blur-md rounded-xl p-8 shadow-2xl">
+                <button id="back-to-services-btn" class="mb-6 text-white hover:text-gray-300 transition-colors">&larr; Elegir otro servicio</button>
+                <h2 class="text-3xl font-bold text-center mb-6 text-white">Confirmar Reserva</h2>
+                
+                <!-- El atributo "action" se establecerá dinámicamente con JS -->
+                <form id="booking-form" action="" method="POST">
+                    <!-- Campos ocultos para enviar la información del servicio -->
+                    <input type="hidden" id="form-service-name" name="servicio">
+                    <input type="hidden" id="form-service-price" name="precio">
+
+                    <div class="mb-6 bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-lg">Servicio Seleccionado:</h3>
+                        <p id="selected-service" class="text-xl"></p>
+                        <p id="selected-price" class="text-lg font-light"></p>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="nombre" class="block mb-2 text-sm font-medium">Tu Nombre</label>
+                        <input type="text" id="nombre" name="nombre" class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ej: Ana Pérez" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="email" class="block mb-2 text-sm font-medium">Tu Email</label>
+                        <input type="email" id="email" name="email" class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="ana.perez@email.com" required>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label for="sucursal" class="block mb-2 text-sm font-medium">Elige una Sucursal</label>
+                        <select id="sucursal" name="sucursal" class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                            <option value="" disabled selected>Selecciona una opción</option>
+                            <option value="Centro">Sucursal Centro</option>
+                            <option value="Norte">Sucursal Norte</option>
+                            <option value="Sur">Sucursal Sur</option>
+                            <option value="Oeste">Sucursal Oeste</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="w-full text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-colors">
+                        Enviar Solicitud de Reserva
+                    </button>
+                </form>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // --- DATOS DE EJEMPLO ---
+        const servicesData = [
+            {
+                category: "Tratamientos Faciales",
+                services: [
+                    { name: "Limpieza Facial Profunda", price: "$850" },
+                    { name: "Hidratación con Ácido Hialurónico", price: "$1200" },
+                    { name: "Peeling Químico Suave", price: "$950" },
+                    { name: "Microdermoabrasión", price: "$1100" },
+                    { name: "Terapia de Luz LED", price: "$750" }
+                ]
+            },
+            {
+                category: "Masajes Relajantes",
+                services: [
+                    { name: "Masaje Descontracturante", price: "$1300" },
+                    { name: "Masaje con Piedras Calientes", price: "$1500" },
+                    { name: "Reflexología Podal", price: "$900" },
+                    { name: "Masaje Sueco", price: "$1200" },
+                    { name: "Drenaje Linfático Manual", price: "$1400" }
+                ]
+            },
+            {
+                category: "Manicura y Pedicura",
+                services: [
+                    { name: "Manicura Clásica", price: "$500" },
+                    { name: "Esmaltado Semipermanente", price: "$700" },
+                    { name: "Pedicura Spa Completa", price: "$900" },
+                    { name: "Uñas Esculpidas", price: "$1800" },
+                    { name: "Tratamiento de Parafina", price: "$600" }
+                ]
+            },
+            {
+                category: "Depilación",
+                services: [
+                    { name: "Cera Completa", price: "$1500" },
+                    { name: "Media Pierna", price: "$700" },
+                    { name: "Axilas", price: "$400" },
+                    { name: "Bozo", price: "$250" },
+                    { name: "Depilación Láser (Consulta)", price: "S/C" }
+                ]
+            },
+             {
+                category: "Peluquería",
+                services: [
+                    { name: "Corte y Secado", price: "$1000" },
+                    { name: "Coloración", price: "$2500" },
+                    { name: "Balayage", price: "$4000" },
+                    { name: "Tratamiento de Keratina", price: "$3500" },
+                    { name: "Peinado de Fiesta", price: "$1500" }
+                ]
+            },
+            {
+                category: "Tratamientos Corporales",
+                services: [
+                    { name: "Exfoliación Corporal", price: "$1100" },
+                    { name: "Envoltura de Algas", price: "$1600" },
+                    { name: "Radiofrecuencia", price: "$1800" },
+                    { name: "Ultracavitación", price: "$1800" },
+                    { name: "Botas de Presoterapia", price: "$900" }
+                ]
+            },
+             {
+                category: "Maquillaje",
+                services: [
+                    { name: "Maquillaje Social de Día", price: "$1200" },
+                    { name: "Maquillaje Social de Noche", price: "$1800" },
+                    { name: "Maquillaje para Novias (con prueba)", price: "$5000" },
+                    { name: "Clase de Automaquillaje", price: "$2500" },
+                    { name: "Perfilado de Cejas", price: "$600" }
+                ]
+            }
+        ];
+
+        // --- LÓGICA DE LA APLICACIÓN ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // ================================================================= //
+            // ====== NUEVA CONFIGURACIÓN PARA RUTAS DE EMAIL POR SUCURSAL ===== //
+            // ================================================================= //
+            // **IMPORTANTE**: Reemplaza estas URLs con las URLs reales de tus formularios de Formspree.
+            const formEndpoints = {
+                'Centro': 'https://formspree.io/f/REEMPLAZA_CON_TU_ID_CENTRO',
+                'Norte': 'https://formspree.io/f/REEMPLAZA_CON_TU_ID_NORTE',
+                'Sur': 'https://formspree.io/f/REEMPLAZA_CON_TU_ID_SUR',
+                'Oeste': 'https://formspree.io/f/REEMPLAZA_CON_TU_ID_OESTE'
+            };
+
+            // Referencias a los elementos del DOM
+            const homePage = document.getElementById('home-page');
+            const servicesPage = document.getElementById('services-page');
+            const bookingPage = document.getElementById('booking-page');
+
+            const verServiciosBtn = document.getElementById('ver-servicios-btn');
+            const backToHomeBtn = document.getElementById('back-to-home-btn');
+            const backToServicesBtn = document.getElementById('back-to-services-btn');
+            
+            const servicesListContainer = document.getElementById('services-list');
+            const bookingForm = document.getElementById('booking-form');
+            const sucursalSelect = document.getElementById('sucursal');
+
+            // **NUEVO**: Escuchar cambios en el selector de sucursal para actualizar el 'action' del formulario
+            sucursalSelect.addEventListener('change', (e) => {
+                const selectedSucursal = e.target.value;
+                if (formEndpoints[selectedSucursal]) {
+                    bookingForm.action = formEndpoints[selectedSucursal];
+                }
+            });
+            
+            // Función para cambiar de página
+            function showPage(pageToShow) {
+                homePage.classList.add('hidden');
+                servicesPage.classList.add('hidden');
+                bookingPage.classList.add('hidden');
+                pageToShow.classList.remove('hidden');
+                window.scrollTo(0, 0); // Vuelve al inicio de la página
+            }
+
+            // --- GENERACIÓN DINÁMICA DE SERVICIOS ---
+            function renderServices() {
+                servicesListContainer.innerHTML = ''; // Limpiar la lista
+                servicesData.forEach(categoryData => {
+                    const details = document.createElement('details');
+                    details.className = 'bg-black/20 backdrop-blur-sm rounded-lg overflow-hidden';
+
+                    const summary = document.createElement('summary');
+                    summary.className = 'p-5 font-semibold text-lg flex justify-between items-center';
+                    summary.innerHTML = `<span>${categoryData.category}</span><span class="text-2xl font-light transform transition-transform duration-300 details-arrow">+</span>`;
+                    
+                    const servicesContainer = document.createElement('div');
+                    servicesContainer.className = 'px-5 pb-5';
+
+                    const ul = document.createElement('ul');
+                    ul.className = 'divide-y divide-gray-600';
+
+                    categoryData.services.forEach(service => {
+                        const li = document.createElement('li');
+                        li.className = 'py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center';
+                        li.innerHTML = `
+                            <div>
+                                <p class="font-medium">${service.name}</p>
+                                <p class="text-sm text-gray-400">${service.price}</p>
+                            </div>
+                            <button class="reservar-btn mt-2 sm:mt-0 px-4 py-2 bg-teal-600 text-white text-sm font-semibold rounded-md hover:bg-teal-500 transition-colors" data-service="${service.name}" data-price="${service.price}">
+                                Reservar
+                            </button>
+                        `;
+                        ul.appendChild(li);
+                    });
+
+                    servicesContainer.appendChild(ul);
+                    details.appendChild(summary);
+                    details.appendChild(servicesContainer);
+                    servicesListContainer.appendChild(details);
+
+                    details.addEventListener('toggle', () => {
+                        const arrow = summary.querySelector('.details-arrow');
+                        if (details.open) {
+                            arrow.style.transform = 'rotate(45deg)';
+                        } else {
+                            arrow.style.transform = 'rotate(0deg)';
+                        }
+                    });
+                });
+            }
+
+            // --- NAVEGACIÓN ---
+            verServiciosBtn.addEventListener('click', () => showPage(servicesPage));
+            backToHomeBtn.addEventListener('click', () => showPage(homePage));
+            backToServicesBtn.addEventListener('click', () => {
+                // Resetear el formulario al volver para evitar enviar a la sucursal equivocada
+                bookingForm.reset();
+                bookingForm.action = '';
+                showPage(servicesPage);
+            });
+
+            // --- LÓGICA DE RESERVA ---
+            servicesListContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('reservar-btn')) {
+                    const serviceName = e.target.dataset.service;
+                    const servicePrice = e.target.dataset.price;
+
+                    document.getElementById('selected-service').textContent = serviceName;
+                    document.getElementById('selected-price').textContent = `Precio: ${servicePrice}`;
+                    document.getElementById('form-service-name').value = serviceName;
+                    document.getElementById('form-service-price').value = servicePrice;
+
+                    showPage(bookingPage);
+                }
+            });
+
+            // --- MANEJO DEL ENVÍO DEL FORMULARIO ---
+            bookingForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                if (!bookingForm.action) {
+                    alert('Por favor, selecciona una sucursal antes de enviar.');
+                    return;
+                }
+
+                // Simulación de envío
+                const form = e.target;
+                const data = new FormData(form);
+                
+                try {
+                    // Esto simula el envío a Formspree
+                    const response = await fetch(form.action, {
+                        method: form.method,
+                        body: data,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                         bookingPage.innerHTML = `
+                            <div class="max-w-lg w-full mx-auto bg-gray-800/50 backdrop-blur-md rounded-xl p-8 shadow-2xl text-center">
+                                <h2 class="text-3xl font-bold mb-4 text-green-400">¡Gracias!</h2>
+                                <p class="text-lg">Hemos recibido tu solicitud de reserva.</p>
+                                <p class="mt-2 text-gray-300">La sucursal correspondiente se pondrá en contacto contigo a la brevedad.</p>
+                                <button onclick="location.reload()" class="mt-8 px-6 py-2 bg-white/90 text-gray-900 font-semibold rounded-lg shadow-md hover:bg-white transition-colors">
+                                    Volver al Inicio
+                                </button>
+                            </div>
+                        `;
+                    } else {
+                        throw new Error('Hubo un problema con el envío.');
+                    }
+                } catch (error) {
+                    alert('Error al enviar el formulario. Por favor, inténtalo de nuevo.');
+                }
+            });
+
+            // Renderizar los servicios al cargar la página
+            renderServices();
+        });
+    </script>
+</body>
+</html>
