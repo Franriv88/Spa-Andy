@@ -70,7 +70,7 @@
         </section>
 
         <section id="booking-page" class="hidden min-h-screen flex items-center justify-center p-4">
-            <div class="max-w-lg w-full mx-auto bg-gray-800/50 backdrop-blur-md rounded-xl p-8 shadow-2xl">
+            <div class="max-w-lg w-full mx-auto bg-grey-800/50 backdrop-blur-md rounded-xl p-8 shadow-2xl">
                 <button id="back-to-services-btn" class="mb-6 text-white hover:text-gray-300 transition-colors">&larr; Elegir otro servicio</button>
                 <h2 class="text-3xl font-bold text-center mb-6 text-white">Confirmar Reserva</h2>
 
@@ -101,8 +101,8 @@
                     </div>
 
                     <div class="mb-6">
-                        <label for="sucursal" class="block mb-2 text-sm font-medium">Eligí una Sucursal</label>
-                        <select id="sucursal" name="sucursal" class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                        <label for="sucursal" class="block mb-2 text-sm font-medium">Elegí una Sucursal</label>
+                        <select id="sucursal" name="sucursal" class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-600 focus:border-blue-500 block w-full p-2.5" required>
                             <option value="" disabled selected>Selecciona una opción</option>
                             <option value="Centro">Sucursal Centro</option>
                             <option value="Norte">Sucursal Norte</option>
@@ -116,19 +116,19 @@
                         <div id="iframe-container">
                             </div>
                     </div> -->
-                    <div id="contenedor-calendario" class="mb-6 hidden">
+                    <div id="contenedor-calendario" class="mb-6 hidden bg-white border-gray-600 rounded-lg p-4">
                         <h4 class="block mb-2 text-sm font-medium text-white">Elige tu horario disponible:</h4>
                         <div id="iframe-container">
                             <iframe src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ1MVrMMD97NRjSPr2YiBM04daMfQKcdG9U1gaQ-ML_YUVYddRHs0clahsTWEfs4GCKBrYTk-MK4?gv=true" style="border: 0" width="100%" height="600" frameborder="0"></iframe>
                         </div>
                     </div>
 
-                    <button id="boton-he-elegido" type="button" class="w-full text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-yellow-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-colors hidden mb-4">
+                    <button id="boton-he-elegido" type="button" class="w-full text-white bg-gray-700 hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-colors hidden mb-4">
                         He elegido mi horario
                     </button>
 
-                    <button id="boton-enviar" type="submit" class="w-full text-white bg-pink-300 hover:bg-pink-400 focus:ring-4 focus:outline-none focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-colors" disabled>
-                        Enviar Solicitud de Reserva
+                    <button id="boton-enviar" type="submit" class="w-full text-white bg-pink-300/70 hover:bg-pink-300/70 focus:ring-4 focus:outline-none focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-colors" disabled>
+                        <!-- acá estaba el texto del botón "Enviar Reserva" -->
                     </button>
                 </form>
             </div>
@@ -219,7 +219,7 @@
         // **IMPORTANTE**: Reemplaza estas URLs con las URLs de tus aplicaciones web de Google Apps Script.
         const appScriptURLs = {
             'Centro': 'AQUI_LA_URL_DE_LA_APP_SCRIPT_DEL_CENTRO',
-            'Norte': 'https://script.google.com/macros/s/AKfycbxvwUzDQFqcbSccNmRQFLALCbGeBV2dlr9H-5llEhVsVwhVJBpoRZMjHCjkPjprGdcB/exec',
+            'Norte': 'https://script.google.com/macros/s/AKfycbzZNYCSvsw3_PD97v6X1_Teum94ZRSiBiAsc2RYJdIywDSFD_ctTVVLCpHsRtinccOk/exec',
             'Sur': 'AQUI_LA_URL_DE_LA_APP_SCRIPT_DEL_SUR',
             'Oeste': 'AQUI_LA_URL_DE_LA_APP_SCRIPT_DEL_OESTE'
         };
@@ -259,7 +259,7 @@
 
             if (urlCalendario) {
                 // Generar el código de incrustación del iframe
-                const iframeHTML = `<iframe src="${urlCalendario}" style="border:0" width="100%" height="600px" frameborder="0" scrolling="auto"></iframe>`;
+                const iframeHTML = `<iframe src="${urlCalendario}" style="border:0" width="100%" height="300px" frameborder="0" scrolling="auto"></iframe>`;
                 iframeContainer.innerHTML = iframeHTML;
                 contenedorCalendario.classList.remove('hidden');
                 botonHeElegido.classList.remove('hidden');
